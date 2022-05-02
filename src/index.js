@@ -67,6 +67,7 @@ class Game extends React.Component {
     this.setState({
       history : history.concat([{
         squares: squares,
+        pos: squareArrayToPos(i),
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
@@ -86,8 +87,11 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
+      let col, row;
+      col = current.squares;
+      row = "row";
       const desc = move ? 
-        "Go to move #" + move :
+        "Go to move #" + move + ". Pos: (" + history[move].pos + ")" :
         "Go to game start";
 
       return (
@@ -103,6 +107,7 @@ class Game extends React.Component {
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O'); 
     }
+
     return (
       <div className="game">
         <div className="game-board">
@@ -143,3 +148,29 @@ function calculateWinner(squares) {
   }
   return null;
 }
+
+// eslint-disable-next-line
+ function squareArrayToPos(i){
+  switch (i){
+    case 0: 
+      return ([1,1]);
+    case 1:
+      return ([2,1]);
+    case 2:
+      return ([3,1]);
+    case 3:
+      return ([1,2]);
+    case 4:
+      return ([2,2]);
+    case 5:
+      return ([3,2]);
+    case 6:
+      return ([1,3]);
+    case 7:
+      return ([2,3]);
+    case 8:
+      return ([3,3]);
+    default:
+      return null;
+  }
+ }
